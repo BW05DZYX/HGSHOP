@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.goods.dao.BrandMapper">
+
+	<insert id="insertBrand" parameterType="brand">
+		INSERT INTO hg_brand SET name=#{name},first_char=upper(#{firstC}),deleted_flag=0
+	</insert>
+	
+	<update id="updateBrand" parameterType="brand">
+		UPDATE hg_brand SET name=#{name},first_char=upper(#{firstC}),deleted_flag=0 WHERE id=#{id}
+	</update>
+	
+	<update id="deleteBrands">
+		<foreach collection="ids" item="id" open="UPDATE hg_brand SET deleted_flag=1 WHERE id in (" separator="," close=")">
+			 #{id}
+		</foreach>
+	</update>
+
+	<select id="selectBrandById" resultType="brand">
+		SELECT b.id,b.name,b.deleted_flag,b.first_char firstC FROM
+		hg_brand b WHERE b.id=#{id} AND b.deleted_flag=0
+	</select>
+
+	<select id="selectBrandsAll" resultType="brand" parameterType="brand" >
+		SELECT b.id,b.name,b.deleted_flag,b.first_char firstC FROM
+		hg_brand b
+		<where>
+			<if test="name!='' and name!=null">
+				AND b.name LIKE CONCAT('%',#{name},'%')
+			</if>
+			<if test="firstC!=null and firstC!=''">
+				AND b.first_char LIKE CONCAT('%',upper(#{firstC}),'%')
+			</if>
+			AND b.deleted_flag=0
+		</where>
+		
+	</select>
+</mapper>

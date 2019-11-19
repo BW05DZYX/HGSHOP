@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.user.dao.UserMapper">
+	<insert id="insertUser" parameterType="user">
+		INSERT INTO hg_user SET
+		username=#{username},password=#{password},
+		name=#{name},email=#{email},telephone=#{telephone},birthday=#{birthday},sex=#{sex},state=#{state},code=#{code};
+	</insert>
+
+	<select id="searchByUnameAndPwd" parameterType="user"
+		resultType="user">
+		SELECT
+		u.uid,u.username,u.password,u.name,u.email,u.telephone,u.birthday,u.sex,u.state,u.code
+		FROM hg_user u WHERE u.username=#{username} AND u.password=#{password}
+	</select>
+	<select id="searchByUname" resultType="user">
+		SELECT
+		u.uid,u.username,u.password,u.name,u.email,u.telephone,u.birthday,u.sex,u.state,u.code
+		FROM hg_user u WHERE u.username=#{username}
+	</select>
+	<select id="selectUsersAll" resultType="user">
+		SELECT
+		u.uid,u.username,u.password,u.name,u.email,u.telephone,u.birthday,u.sex,u.state,u.code
+		FROM hg_user u
+	</select>
+</mapper>

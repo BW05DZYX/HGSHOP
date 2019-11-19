@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.goods.dao.CategoryMapper">
+	<resultMap type="category" id="categoryMap">
+		<id property="id" column="pid" />
+		<result property="name" column="pname" />
+		<collection property="childCategory" javaType="arrayList" ofType="category">
+			<id property="id" column="c1id" />
+			<result property="name" column="c1name" />
+			<collection property="childCategory" javaType="arrayList" ofType="category">
+				<id property="id" column="c2id" />
+				<result property="name" column="c2name" />
+			</collection>
+		</collection>
+	</resultMap>
+
+	<insert id="insertCategory" parameterType="category">
+		INSERT INTO
+		hg_category SET parent_id=#{parentId},name=#{name}
+	</insert>
+	<update id="updateCategory" parameterType="category">
+		UPDATE hg_category SET name=#{name}
+		<if test="parentId!=null and parentId!='' and parentId!=0">
+			,parent_id=#{parentId}
+		</if>
+		WHERE id=#{id}
+	</update>
+	<delete id="deleteCategory">
+		DELETE FROM hg_category WHERE id=#{id} OR
+		parent_id=#{id} OR parent_id IN (SELECT id FROM (SELECT id FROM
+		hg_category WHERE parent_id=#{id}) n)
+	</delete>
+	<select id="selectCategorysAll" resultMap="categoryMap">
+		SELECT p.id pid,p.name pname,c1.id c1id,c1.name c1name,c2.id c2id,c2.name
+		c2name FROM hg_category p LEFT JOIN hg_category c1 ON
+		p.id=c1.parent_id LEFT JOIN hg_category c2 ON c1.id=c2.parent_id
+		WHERE p.parent_id=1
+	</select>
+</mapper>
