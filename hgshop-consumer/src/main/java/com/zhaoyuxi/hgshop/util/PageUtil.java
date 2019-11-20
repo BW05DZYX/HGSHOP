@@ -24,7 +24,7 @@ public class PageUtil {
 		// String.format("%1$s%2$s", "abc","123");
 		// 'url?page=1' ,url, flag,"page" ,page- 1 < 1 ? 1 : page- 1)
 		sb.append(String.format(
-				"<ul class='pagination'><li class='page-item'><a class='page-link'  href='%1$s%2$s%3$s=%4$s'aria-label='Previous'>  <span aria-hidden='true'>&laquo;</span></a></li>",
+				"<ul class='pagination'><li class='page-item'><a class='page-link' style='background-color: rgba(250, 250, 255, 0.3);'  href='%1$s%2$s%3$s=%4$s'aria-label='Previous'>  <span aria-hidden='true'>&laquo;</span></a></li>",
 				url, flag, "pageNum", pageNum - 1 < 1 ? 1 : pageNum - 1));
 		// 设开始页为1
 		int beginPage = 1;
@@ -36,7 +36,7 @@ public class PageUtil {
 		for (int i = 0; i < pageLook; i++) {
 			// 当前页不加链接
 			sb.append(String.format(
-					"<li class='page-item'><a  class='page-link'  href='%1$s%2$s%3$s=%4$s' >%4$s</a></li>",
+					"<li class='page-item'><a  class='page-link'  style='background-color: rgba(250, 250, 255, 0.3);'  href='%1$s%2$s%3$s=%4$s' >%4$s</a></li>",
 					url, flag, "pageNum", beginPage + i));
 			// 如果后面的页数大于总页数，退出循环
 			if (beginPage + i >= pages) {
@@ -44,7 +44,7 @@ public class PageUtil {
 			}
 		}
 		sb.append(String.format(
-				"<li class='page-item'><a  class='page-link' href='%1$s%2$s%3$s=%4$s'  aria-label='Next' ><span aria-hidden='true'>&raquo;</span></a></li>",
+				"<li class='page-item'><a  class='page-link' style='background-color: rgba(250, 250, 255, 0.3);'  href='%1$s%2$s%3$s=%4$s'  aria-label='Next' ><span aria-hidden='true'>&raquo;</span></a></li>",
 				url, flag, "pageNum", pageNum + 1 >= pages ? pages : pageNum + 1));
 		sb.append("</ul></nav>");
 		return sb.toString();

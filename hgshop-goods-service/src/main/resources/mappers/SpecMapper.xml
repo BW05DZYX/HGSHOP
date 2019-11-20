@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.goods.dao.SpecMapper">
+	<resultMap type="spec" id="specMap">
+		<id property="id" column="id"/>
+		<result property="specName" column="spec_name"/>
+		<result property="optionNames" column="optionNames"/>
+		<collection property="specOptions" javaType="arrayList" ofType="specOption">
+			<id property="id" column="oid"/>
+			<result property="optionName" column="option_name"/>
+			<result property="specId" column="spec_id"/>
+			<result property="optionName" column="option_name"/>
+			<result property="orders" column="orders"/>
+		</collection>
+	</resultMap>
+
+	<insert id="insertSpec" parameterType="spec">
+		INSERT INTO hg_spec SET
+		spec_name=#{specName}
+	</insert>
+	<insert id="insertSpecOption" parameterType="specOption">
+		<foreach collection="optionNames" item="option" open="INSERT INTO hg_spec_option (spec_id,orders,option_name) VALUES " separator=",">
+			(#{specId},#{orders},#{option})
+		</foreach>
+	</insert> 
+	<update id="updateSpec" parameterType="spec">
+		UPDATE hg_spec SET
+		spec_name=#{specName} WHERE id=#{id}
+	</update>
+	<delete id="deleteSpec">
+		DELETE FROM hg_spec WHERE id in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+
+	</delete>
+	<delete id="deleteSpecOption">
+		DELETE FROM hg_spec_option WHERE spec_id=#{specId}
+	</delete>
+	<select id="selectSpecById" resultMap="specMap">
+		SELECT
+		s.id,s.spec_name,GROUP_CONCAT(o.option_name) optionNames,o.id oid,o.spec_id,o.orders,o.option_name
+		FROM hg_spec s LEFT JOIN hg_spec_option o ON s.id=o.spec_id
+		WHERE
+		s.id=#{id}
+		GROUP BY s.id
+	</select>
+	
+	<select id="selectSpecByName" resultMap="specMap">
+		SELECT
+		s.id,s.spec_name,GROUP_CONCAT(o.option_name) optionNames,o.id oid,o.spec_id,o.orders,o.option_name
+		FROM hg_spec s LEFT JOIN hg_spec_option o ON s.id=o.spec_id
+		WHERE
+		s.spec_name=#{specName}
+		GROUP BY s.id
+	</select>
+	
+	<select id="selectSpecsAll" resultMap="specMap">
+		SELECT
+		s.id,s.spec_name,GROUP_CONCAT(o.option_name) optionNames,o.id oid,o.spec_id,o.orders,o.option_name
+		FROM hg_spec s LEFT JOIN hg_spec_option o ON s.id=o.spec_id
+		<where>
+			<if test="specName!=''  and specName!=null ">
+				AND s.spec_name LIKE CONCAT('%',#{specName},'%')
+			</if>
+		</where>
+		GROUP BY s.id
+	</select>
+	
+	<select id="selectSpecOptionsAll" resultType="specOption">
+		SELECT o.id,o.option_name,o.spec_id,o.orders FROM hg_spec_option
+		<where>
+			<if test=" specId!=0 and specId!='' and specId!=null">
+				AND o.spec_id=#{specId}
+			</if>
+		</where>
+	</select>
+</mapper>

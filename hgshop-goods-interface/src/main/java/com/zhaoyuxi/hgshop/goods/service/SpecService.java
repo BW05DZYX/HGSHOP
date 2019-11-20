@@ -1,6 +1,8 @@
 package com.zhaoyuxi.hgshop.goods.service;
 
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.zhaoyuxi.hgshop.goods.entity.Spec;
 import com.zhaoyuxi.hgshop.goods.entity.SpecOption;
@@ -12,17 +14,17 @@ import com.zhaoyuxi.hgshop.goods.entity.SpecOption;
 */
 public interface SpecService {
 	//添加规格
-	public int insertSpec(Spec spec);
+	public int insertSpec(Spec spec,SpecOption specOption);
 	//添加规格选项
 	public int insertSpecOption(SpecOption specOption);
 	//修改规格
-	public int updateSpec(Spec spec);
+	public int updateSpec(Spec spec,SpecOption specOption);
 	//删除规格
-	public int deleteSpec(String ids[]); 
-	//删除规格选项
-	public int deleteSpecOption(String id);
+	public int deleteSpec(Integer ids[]); 
 	//查询单个规格
-	public Spec selectSpecById(String id);
+	public Spec selectSpecById(int id);
 	//查询所有规格
-	public PageInfo<Spec> selectSpecsAll(String name,int pageNum,int pageSize);
+	public PageInfo<Spec> selectSpecsAll(String specName,int pageNum,int pageSize);
+	//查询所有具体规格
+	public List<SpecOption> selectSpecOptionsAll(Integer specId);
 }

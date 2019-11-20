@@ -118,6 +118,18 @@
 	</div>
 	<script type="text/javascript">
 		var upd;
+		
+		//全选,反选
+		$("#cbk").click(function(){
+			$(".ck").each(function(){
+				if($(this).prop("checked")){
+					$(this).prop("checked",false);
+				}else{
+					$(this).prop("checked",true);
+				}
+			})
+		})
+		
 		$("button").click(function() {
 			$("#myModalLabel").html($(this).html() + "品牌");
 			$("#zyx-submit").html($(this).html());

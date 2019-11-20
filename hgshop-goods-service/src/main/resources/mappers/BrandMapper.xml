@@ -5,25 +5,32 @@
 <mapper namespace="com.zhaoyuxi.hgshop.goods.dao.BrandMapper">
 
 	<insert id="insertBrand" parameterType="brand">
-		INSERT INTO hg_brand SET name=#{name},first_char=upper(#{firstC}),deleted_flag=0
+		INSERT INTO hg_brand SET
+		name=#{name},first_char=upper(#{firstC}),deleted_flag=0
 	</insert>
-	
+
 	<update id="updateBrand" parameterType="brand">
-		UPDATE hg_brand SET name=#{name},first_char=upper(#{firstC}),deleted_flag=0 WHERE id=#{id}
+		UPDATE hg_brand SET
+		name=#{name},first_char=upper(#{firstC}),deleted_flag=0 WHERE id=#{id}
 	</update>
-	
+
 	<update id="deleteBrands">
-		<foreach collection="ids" item="id" open="UPDATE hg_brand SET deleted_flag=1 WHERE id in (" separator="," close=")">
-			 #{id}
+		UPDATE hg_brand SET deleted_flag=1 WHERE id in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
 		</foreach>
 	</update>
 
 	<select id="selectBrandById" resultType="brand">
-		SELECT b.id,b.name,b.deleted_flag,b.first_char firstC FROM
-		hg_brand b WHERE b.id=#{id} AND b.deleted_flag=0
+		SELECT
+		b.id,b.name,b.deleted_flag,b.first_char firstC FROM
+		hg_brand b WHERE
+		b.id=#{id} AND b.deleted_flag=0
 	</select>
 
-	<select id="selectBrandsAll" resultType="brand" parameterType="brand" >
+	<select id="selectBrandsAll" resultType="brand"
+		parameterType="brand">
 		SELECT b.id,b.name,b.deleted_flag,b.first_char firstC FROM
 		hg_brand b
 		<where>
@@ -35,6 +42,6 @@
 			</if>
 			AND b.deleted_flag=0
 		</where>
-		
+
 	</select>
 </mapper>

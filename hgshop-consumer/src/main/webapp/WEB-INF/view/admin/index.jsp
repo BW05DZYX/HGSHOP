@@ -51,9 +51,9 @@
 				}
 			})
 			
-			$(".selected-color").click(function(){
+			$(".selected-color a").click(function(){
 				$(".selected-color").prop("style","background: rgba(0, 0, 0, 0.2);")
-				$(this).prop("style","background: rgba(50, 0,0, 1);")
+				$(this).parent().prop("style","background: rgba(50, 0,0, 1);")
 			})
 		})
 	</script>

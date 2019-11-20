@@ -20,7 +20,7 @@
 			<li class="selected-color"><a
 				style="text-decoration: none; color: white;"
 				href="javascript:void(0)"> - </a>&nbsp;&nbsp;&nbsp;<a
-				style="text-decoration: none" href="javascript:void(0)">规格参数管理</a></li>
+				style="text-decoration: none" href="/spec/tospec" target="mainFrame">规格参数管理</a></li>
 			<li class="selected-color"><a style="text-decoration: none;color:white;"
 				href="#exampledropdownDropdown" aria-expanded="false"
 				data-toggle="collapse" class="parent-a"> <i class="icon-windows">+&nbsp;&nbsp;&nbsp; </i></a><a

@@ -1,6 +1,7 @@
 package com.zhaoyuxi.hgshop.goods.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
 *@author 作者:赵玉玺
@@ -22,6 +23,8 @@ public class SpecOption implements Serializable{
 	private int specId;
 	//排序
 	private int orders;
+	//用于进行批量添加
+	private String[] optionNames;
 	public Integer getId() {
 		return id;
 	}
@@ -46,24 +49,32 @@ public class SpecOption implements Serializable{
 	public void setOrders(int orders) {
 		this.orders = orders;
 	}
+	public String[] getOptionNames() {
+		return optionNames;
+	}
+	public void setOptionNames(String[] optionNames) {
+		this.optionNames = optionNames;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
 		return "SpecOption [id=" + id + ", optionName=" + optionName + ", specId=" + specId + ", orders=" + orders
-				+ "]";
+				+ ", optionNames=" + Arrays.toString(optionNames) + "]";
 	}
-	public SpecOption(Integer id, String optionName, int specId, int orders) {
+	public SpecOption(Integer id, String optionName, int specId, int orders, String[] optionNames) {
 		super();
 		this.id = id;
 		this.optionName = optionName;
 		this.specId = specId;
 		this.orders = orders;
+		this.optionNames = optionNames;
 	}
 	public SpecOption() {
 		super();
 	}
+	
 	
 	
 	
