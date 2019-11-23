@@ -40,14 +40,16 @@
 					href="javascript:void(0)">- </a><a style="text-decoration: none"
 					href="javascript:void(0)">&nbsp;&nbsp;&nbsp;Page</a></li>
 			</ul>
+			<li class="selected-color" style="position: relative;" id="zyx-tree"><a
+				style="text-decoration: none; color: white;"
+				href="javascript:void(0)"> - </a>&nbsp;&nbsp;&nbsp;<a
+				style="text-decoration: none" href="/spu/tospu" target="mainFrame">spu管理</a>
+					<div id="tree"></div>
+				</li>
 			<li class="selected-color"><a
 				style="text-decoration: none; color: white;"
 				href="javascript:void(0)"> - </a>&nbsp;&nbsp;&nbsp;<a
-				style="text-decoration: none" href="javascript:void(0)">商品管理</a></li>
-			<li class="selected-color"><a
-				style="text-decoration: none; color: white;"
-				href="javascript:void(0)"> - </a>&nbsp;&nbsp;&nbsp;<a
-				style="text-decoration: none" href="javascript:void(0)">订单管理</a></li>
+				style="text-decoration: none" href="/sku/tosku" target="mainFrame">sku管理</a></li>
 
 		</ul>
 	</nav>

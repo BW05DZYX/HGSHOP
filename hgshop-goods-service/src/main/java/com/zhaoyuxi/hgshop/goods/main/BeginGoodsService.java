@@ -15,6 +15,5 @@ public class BeginGoodsService {
 		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:applicationContext-dao.xml");
 		//按任意键退出
 		System.in.read();
-		
 	}
 }

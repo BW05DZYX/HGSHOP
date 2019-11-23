@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.goods.dao.SkuMapper">
+	<resultMap type="sku" id="skuMap">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="sellPoint" column="sell_point" />
+		<result property="price" column="price" />
+		<result property="stockCount" column="stock_count" />
+		<result property="barcode" column="barcode" />
+		<result property="image" column="image" />
+		<result property="status" column="status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="costPrice" column="cost_price" />
+		<result property="marketPrice" column="market_price" />
+		<result property="spuId" column="spu_id" />
+		<result property="cartThumbnail" column="cart_thumbnail" />
+		<result property="goodsName" column="goods_name" />
+		<result property="caption" column="caption" />
+		<collection property="skuSpeOpts" javaType="arrayList"
+			ofType="skuSpeOpt">
+			<id property="id" column="ssId" />
+			<result property="skuId" column="sku_id" />
+			<result property="specId" column="spec_id" />
+			<result property="specName" column="spec_name" />
+			<result property="specOptionId" column="spec_option_id" />
+			<result property="optionName" column="option_name" />
+		</collection>
+	</resultMap>
+
+	<resultMap type="spu" id="spuMap">
+
+	</resultMap>
+
+	<insert id="insertSku" parameterType="sku">
+		INSERT INTO hg_sku SET
+		title=#{title},sell_point=#{sellPoint},price=#{price},stock_count=#{stockCount},barcode=#{barcode}
+		<if test="image!=null and image!=''">
+			,image=#{image}
+		</if>
+		,status=#{status},create_time=#{createTime},update_time=#{updateTime},cost_price=#{costPrice},market_price=#{marketPrice},spu_id=#{spuId}
+		<if test="cartThumbnail!=null and cartThumbnail!=''">
+			,cart_thumbnail=#{cartThumbnail}
+		</if>
+	</insert>
+	<insert id="insertSkuSpeOpt" parameterType="skuSpeOpt">
+		INSERT INTO
+		hg_sku_spec SET
+		sku_id=#{skuId},spec_id=#{specId},spec_option_id=#{specOptionId}
+	</insert>
+	<delete id="deleteSku">
+		DELETE FROM hg_sku WHERE id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteSkuSpeOptById">
+		DELETE FROM hg_sku_spec WHERE sku_id in 
+		<foreach collection="skuIds" item="skuId" open="(" separator=","
+			close=")">
+			#{skuId}
+		</foreach>
+	</delete>
+	<update id="updateSku" parameterType="sku">
+		UPDATE hg_sku SET
+		title=#{title},sell_point=#{sellPoint},price=#{price},stock_count=#{stockCount},barcode=#{barcode}
+		<if test="image!=null and image!=''">
+			,image=#{image}
+		</if>
+		,status=#{status},create_time=#{createTime},update_time=#{updateTime},cost_price=#{costPrice},market_price=#{marketPrice},spu_id=#{spuId}
+		<if test="cartThumbnail!=null and cartThumbnail!=''">
+			,cart_thumbnail=#{cartThumbnail}
+		</if>
+		WHERE id=#{id}
+	</update>
+	<select id="selectSkusAll" resultMap="skuMap">
+		SELECT
+		k.id,k.title,k.sell_point,k.price,k.stock_count,k.barcode,k.image,k.`status`,k.create_time,k.update_time,k.cost_price,k.market_price,k.spu_id,k.cart_thumbnail,p.caption,p.goods_name,ss.id
+		ssId,ss.sku_id,ss.spec_id,ss.spec_option_id,e.spec_name,o.option_name
+		FROM hg_sku
+		k LEFT JOIN hg_spu p ON k.spu_id=p.id LEFT JOIN
+		hg_sku_spec
+		ss ON
+		k.id=ss.sku_id LEFT JOIN hg_spec e ON
+		ss.spec_id=e.id LEFT JOIN
+		hg_spec_option o ON ss.spec_option_id=o.id
+		<where>
+			<if test="title!=null and title!=''">
+				AND k.title=#{title}
+			</if>
+			<if test="caption!='' and caption!=null">
+				AND p.caption=#{caption}
+			</if>
+		</where>
+	</select>
+	<select id="selectSkuById" resultMap="skuMap">
+		SELECT
+		k.id,k.title,k.sell_point,k.price,k.stock_count,k.barcode,k.image,k.`status`,k.create_time,k.update_time,k.cost_price,k.market_price,k.spu_id,k.cart_thumbnail,p.caption,p.goods_name,ss.id
+		ssId,ss.sku_id,ss.spec_id,ss.spec_option_id,e.spec_name,o.option_name
+		FROM hg_sku
+		k LEFT JOIN hg_spu p ON k.spu_id=p.id LEFT JOIN
+		hg_sku_spec
+		ss ON
+		k.id=ss.sku_id LEFT JOIN hg_spec e ON
+		ss.spec_id=e.id LEFT JOIN
+		hg_spec_option o ON ss.spec_option_id=o.id
+		WHERE k.id=#{id}
+	</select>
+
+	<select id="selectSkuByTitle" resultMap="skuMap">
+		SELECT
+		k.id,k.title,k.sell_point,k.price,k.stock_count,k.barcode,k.image,k.`status`,k.create_time,k.update_time,k.cost_price,k.market_price,k.spu_id,k.cart_thumbnail,p.caption,p.goods_name,ss.id
+		ssId,ss.sku_id,ss.spec_id,ss.spec_option_id,e.spec_name,o.option_name
+		FROM hg_sku
+		k LEFT JOIN hg_spu p ON k.spu_id=p.id LEFT JOIN
+		hg_sku_spec
+		ss ON
+		k.id=ss.sku_id LEFT JOIN hg_spec e ON
+		ss.spec_id=e.id LEFT JOIN
+		hg_spec_option o ON ss.spec_option_id=o.id
+		WHERE k.title=#{title}
+	</select>
+</mapper>
+  

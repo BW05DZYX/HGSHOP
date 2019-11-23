@@ -30,12 +30,18 @@ public interface SpecMapper {
 	// 查询单个规格（通过id）
 	public Spec selectSpecById(int id);
 
-	//查询单个规格（通过名称）
+	// 查询单个规格（通过名称）
 	public Spec selectSpecByName(String specName);
-	
+
 	// 查询所有规格
 	public List<Spec> selectSpecsAll(@Param("specName") String specName);
 
 	// 查询所有具体规格
-	public List<SpecOption> selectSpecOptionsAll(@Param("specId")Integer specId);
+	public List<SpecOption> selectSpecOptionsAll(@Param("specId") Integer specId);
+
+	// 查询所有规格列表
+	public List<Spec> selectSpecs();
+
+	// 查询规格通过id
+	public Spec getSpecList(int id);
 }

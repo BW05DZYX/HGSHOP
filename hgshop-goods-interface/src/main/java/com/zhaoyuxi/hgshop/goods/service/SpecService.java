@@ -27,4 +27,8 @@ public interface SpecService {
 	public PageInfo<Spec> selectSpecsAll(String specName,int pageNum,int pageSize);
 	//查询所有具体规格
 	public List<SpecOption> selectSpecOptionsAll(Integer specId);
+	//查询所有规格列表
+	public List<Spec> selectSpecs();
+	//查询规格通过id
+	public Spec getSpecList(int id);
 }

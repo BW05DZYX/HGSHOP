@@ -92,12 +92,14 @@
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="specName" id="addSpecName"
 									placeholder="规格名称">
+									<p class="zyx-specName"></p>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3" id="zyx-option">
+							<div class="col-sm-9">
 								<input type="button" class="btn btn-info" value="增加选项内容"
 									onclick="addOption()" />
+									<p class="zyx-option"></p>
 							</div>
 						</div>
 					</form>
@@ -140,8 +142,9 @@
 				$("[data-option-id='0']").remove();
 				if($(this).html()=="查看"){
 					$.post("/spec/lookspec",{"id":$(this).val()},function(res){
-						$(".modal-body").prop("style","display:none;");
-						$("#zyx-modal-body").html('<div>规格名称:'+res.specName+'</div><div>规格选项有:'+res.optionNames+'</div>')
+						hiddenForm("addForm");
+						$(".zyx-specName").html(res.specName);
+						$(".zyx-option").html('<b style="margin-left:62px;">选项内容</b>'+'<span  style="margin-left:30px;">'+res.optionNames+'</span>')
 						$("#zyx-spec-submit").prop("style","display:none;");
 					},"json")
 				}else if($(this).html()=="修改"){
@@ -179,8 +182,7 @@
 						}
 					})
 				}
-				$(".modal-body").prop("style","display:block;");
-				$("#zyx-modal-body").html("");
+				lookForm("addForm");
 				$("#zyx-spec-submit").prop("style","display:inline;");
 			}
 		})
@@ -225,6 +227,17 @@
 					}
 				}, "json")
 			}
+		}
+		
+		//隐藏部分标签，为了详情
+		function hiddenForm(formName){
+			$("#"+formName +" input ").prop("style","display:none;")
+			$("#"+ formName+" p ").prop("style","display:block;")
+		}
+		//重新显示标签
+		function lookForm(formName){
+			$("#"+ formName+" input ").prop("style","display:inline;")
+			$("#"+formName +" p ").prop("style","display:none;")
 		}
 	</script>
 

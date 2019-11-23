@@ -54,7 +54,7 @@
 				<h3>分类修改操作</h3>
 				<form class="form-horizontal" id="updateForm">
 					<input type="hidden" name="id" id="updateId" class="pid" /> <input
-						type="hidden" name="parentId" id="updateParentId" />
+						type="hidden" name="parentId" id="updateParentId" value="0"/>
 					<div class="form-group">
 						<label for="name" class="col-sm-3 control-label">分类名称</label>
 						<div class="col-sm-9">
@@ -142,18 +142,16 @@
 					})
 
 			//这是进行修改的操作
-			$("#zyx-category-up").click(
-					function() {
-						$.post("/category/upcategory", $("#updateForm")
-								.serialize(), function(res) {
-							if (res != 0) {
-								alert("修改成功");
-								window.location.reload();
-							} else {
-								alert("修改失败");
-							}
-						})
-					})
+			$("#zyx-category-up").click(function() {
+				$.post("/category/upcategory",$("#updateForm").serialize(),function(res){
+					if (res != 0) {
+						alert("修改成功");
+						window.location.reload();
+					} else {
+						alert("修改失败");
+					}
+				})
+			})
 
 			//这是进行删除的操作
 			$("#zyx-category-del").click(function() {

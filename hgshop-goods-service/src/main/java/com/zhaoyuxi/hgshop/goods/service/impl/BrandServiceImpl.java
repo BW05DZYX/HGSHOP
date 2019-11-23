@@ -33,13 +33,13 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public int deleteBrands(String[] ids) {
+	public int deleteBrands(Integer[] ids) {
 		return brandMapper.deleteBrands(ids);
 	}
 
 
 	@Override
-	public Brand selectBrandById(String id) {
+	public Brand selectBrandById(int id) {
 		return brandMapper.selectBrandById(id);
 	}
 
@@ -47,6 +47,11 @@ public class BrandServiceImpl implements BrandService {
 	public PageInfo<Brand> selectBrandsAll(Brand brand,int pageNum,int pageSize) {
 		PageHelper.startPage(pageNum,pageSize);
 		return new PageInfo<Brand>(brandMapper.selectBrandsAll(brand));
+	}
+
+	@Override
+	public List<Brand> selectBrands() {
+		return brandMapper.selectBrands();
 	}
 
 }

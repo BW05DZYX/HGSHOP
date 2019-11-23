@@ -71,11 +71,24 @@
 	</select>
 	
 	<select id="selectSpecOptionsAll" resultType="specOption">
-		SELECT o.id,o.option_name,o.spec_id,o.orders FROM hg_spec_option
+		SELECT o.id,o.option_name,o.spec_id,o.orders FROM hg_spec_option o
 		<where>
 			<if test=" specId!=0 and specId!='' and specId!=null">
 				AND o.spec_id=#{specId}
 			</if>
 		</where>
+	</select>
+	<select id="selectSpecs" resultType="spec">
+		SELECT
+		s.id,s.spec_name 
+		FROM hg_spec s
+	</select>
+	
+	<select id="getSpecList" resultMap="specMap">
+		SELECT
+		s.id,s.spec_name,o.option_name optionNames,o.id oid,o.spec_id,o.orders,o.option_name
+		FROM hg_spec s LEFT JOIN hg_spec_option o ON s.id=o.spec_id
+		WHERE
+		s.id=#{id}
 	</select>
 </mapper>

@@ -16,7 +16,7 @@ public interface CategoryMapper {
 	public int updateCategory(Category category);
 
 	// 删除分类
-	public int deleteCategory(String id);
+	public int deleteCategory(int id);
 
 	// 查询分类
 	public List<Category> selectCategorysAll();

@@ -44,4 +44,10 @@
 		</where>
 
 	</select>
+
+	<select id="selectBrands" resultType="brand">
+		SELECT b.id,b.name,b.deleted_flag,b.first_char firstC FROM
+		hg_brand b WHERE
+		b.deleted_flag=0
+	</select>
 </mapper>

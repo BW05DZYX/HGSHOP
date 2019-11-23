@@ -1,5 +1,7 @@
 package com.zhaoyuxi.hgshop.controller;
 
+import java.util.List;
+
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,13 +77,23 @@ public class BrandController {
 	 */
 	@PostMapping("brandLook")
 	@ResponseBody
-	public Brand brandLook(String id) {
+	public Brand brandLook(int id) {
 		return brandService.selectBrandById(id);
 	}
 	
 	@PostMapping("brandDelete")
 	@ResponseBody
-	public Integer brandDelete(String[] ids) {
+	public Integer brandDelete(Integer[] ids) {
 		return brandService.deleteBrands(ids);
+	}
+	
+	/**
+	 * 获取所有的分类
+	 * @return
+	 */
+	@PostMapping("brandSelect")
+	@ResponseBody
+	public List<Brand> brandSelect(){
+		return brandService.selectBrands();
 	}
 }

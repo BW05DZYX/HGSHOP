@@ -1,7 +1,8 @@
 package com.zhaoyuxi.hgshop.goods.service;
 
-import java.util.List;
 
+
+import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaoyuxi.hgshop.goods.entity.Brand;
@@ -19,11 +20,14 @@ public interface BrandService {
 	public int updateBrand(Brand brand);
 
 	// 删除品牌
-	public int deleteBrands(String[] ids);
+	public int deleteBrands(Integer[] ids);
 
 	// 根据id查询单个品牌
-	public Brand selectBrandById(String id);
+	public Brand selectBrandById(int id);
 
 	// 查询所有品牌
 	public PageInfo<Brand> selectBrandsAll(Brand brand, int pageNum, int pageSize);
+	
+	//查询所有品牌返回集合
+	public List<Brand> selectBrands();
 }

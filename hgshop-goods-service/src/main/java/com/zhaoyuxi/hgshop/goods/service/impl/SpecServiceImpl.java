@@ -88,4 +88,14 @@ public class SpecServiceImpl implements SpecService {
 		return specMapper.selectSpecOptionsAll(specId);
 	}
 
+	@Override
+	public List<Spec> selectSpecs() {
+		return specMapper.selectSpecs();
+	}
+
+	@Override
+	public Spec getSpecList(int id) {
+		return specMapper.getSpecList(id);
+	}
+
 }

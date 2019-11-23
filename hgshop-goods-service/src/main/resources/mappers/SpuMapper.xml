@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyuxi.hgshop.goods.dao.SpuMapper">
+	<insert id="insertSpu" parameterType="spu">
+		INSERT INTO hg_spu SET
+		goods_name=#{goodsName},is_marketable=#{isMarketable},brand_id=#{brandId},caption=#{caption},category_id=#{categoryId},small_pic=#{smallPic}
+	</insert>
+	<update id="updateSpu" parameterType="spu">
+		UPDATE hg_spu SET
+		goods_name=#{goodsName},is_marketable=#{isMarketable},brand_id=#{brandId},caption=#{caption},category_id=#{categoryId}
+		<if test="smallPic!='' and smallPic!=null ">
+			,small_pic=#{smallPic}
+		</if>
+		WHERE id=#{id}
+	</update>
+	<delete id="deleteSpu">
+		DELETE FROM hg_spu WHERE id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<select id="selectSpusAll" resultType="spu">
+		SELECT
+		s.id,s.goods_name,s.is_marketable,s.brand_id,b.`name` brandName,b.deleted_flag,
+		s.caption,s.category_id,c.`name` categoryName,s.small_pic
+		FROM hg_spu s LEFT JOIN hg_brand b ON s.brand_id=b.id LEFT JOIN
+		hg_category c ON s.category_id=c.id
+		<where>
+			<if test="goodsName!='' and goodsName!=null">
+				AND goods_name LIKE CONCAT('%',#{goodsName},'%')
+			</if>
+			<if test="caption!='' and caption!=null ">
+				AND caption LIKE CONCAT('%',#{caption},'%')
+			</if>
+		</where>
+		GROUP BY s.id
+	</select>
+	<select id="selectSpuById" resultType="spu">
+		SELECT
+		s.id,s.goods_name,s.is_marketable,s.brand_id,b.`name` brandName,b.deleted_flag,
+		s.caption,s.category_id,c.`name` categoryName,s.small_pic
+		FROM hg_spu s LEFT JOIN hg_brand b ON s.brand_id=b.id LEFT JOIN
+		hg_category c ON s.category_id=c.id
+		WHERE s.id=#{id}
+		GROUP BY s.id
+	</select>
+	<select id="selectSpus" resultType="spu">
+		SELECT
+		s.id,s.goods_name,s.is_marketable,s.brand_id,b.`name` brandName,b.deleted_flag,
+		s.caption,s.category_id,c.`name` categoryName,s.small_pic
+		FROM hg_spu s LEFT JOIN hg_brand b ON s.brand_id=b.id LEFT JOIN
+		hg_category c ON s.category_id=c.id
+		GROUP BY s.id
+	</select>
+</mapper>

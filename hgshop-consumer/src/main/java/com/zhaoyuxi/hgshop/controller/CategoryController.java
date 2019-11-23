@@ -72,7 +72,7 @@ public class CategoryController {
 	 */
 	@PostMapping("delcategory")
 	@ResponseBody
-	public Integer delCategory(String id) {
+	public Integer delCategory(int id) {
 		return categoryService.deleteCategory(id);
 	}
 }

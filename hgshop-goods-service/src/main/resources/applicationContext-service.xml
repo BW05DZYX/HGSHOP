@@ -101,7 +101,11 @@
 
 
 	<!-- 应用程序 -->
-	<dubbo:application name="dubbo-goods-provider" />
+	<dubbo:application name="dubbo-goods-provider">
+		<dubbo:parameter key="qos.enable" value="true" />
+		<dubbo:parameter key="qos.accept.foreign.ip" value="false" />
+		<dubbo:parameter key="qos.port" value="44444" />
+	</dubbo:application>
 	<!-- 注册中心 采用zookeeper -->
 	<dubbo:registry address="zookeeper://192.168.17.130:2181" />
 	<!-- 通讯协议 -->

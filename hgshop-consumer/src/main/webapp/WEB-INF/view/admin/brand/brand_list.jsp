@@ -96,7 +96,7 @@
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="name"
 									placeholder="品牌名称">
-									<div id="zyx-look-name"></div>
+									<p class="zyx-name"></p>
 							</div>
 						</div>
 						<div class="form-group">
@@ -104,7 +104,7 @@
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="firstC"
 									placeholder="品牌首字母">
-									<div id="zyx-look-firstC"></div>
+									<p class="zyx-firstC"></p>
 							</div>
 						</div>
 					</form>
@@ -135,27 +135,19 @@
 			$("#zyx-submit").html($(this).html());
 			if($(this).prop("id")!="zyx-submit"){//这一部分是页面按钮的事件
 				//协调隐藏显示
-				$("#zyx-submit").prop("style","display:inline;");
-				$("#zyx-form input").val("");
-				$("#zyx-form input").prop("style","display:inline;");
-				$("#zyx-look-name").prop("style","display:none;");
-				$("#zyx-look-firstC").prop("style","display:none;");
 				if($(this).html()=="修改"){
 					upd=$(this).val();
 					$.post("/brand/brandLook",{"id":$(this).val()},function(res){
 						$("#zyx-form [name='name']").val(res.name);
 						$("#zyx-form [name='firstC']").val(res.firstC);
 					},"json")
-					
 				}else if($(this).html()=="查看"){
 					$.post("/brand/brandLook",{"id":$(this).val()},function(res){
 						//协调显示
-						$("#zyx-form input").prop("style","display:none;");
-						$("#zyx-look-name").prop("style","display:inline;");
-						$("#zyx-look-firstC").prop("style","display:inline;");
+						hiddenForm("zyx-form");
 						$("#zyx-submit").prop("style","display:none;");
-						$("#zyx-look-name").html(res.name+"<br>");
-						$("#zyx-look-firstC").html(res.firstC);
+						$(".zyx-name").html(res.name);
+						$(".zyx-firstC").html(res.firstC);
 					},"json")
 				}else if($(this).html()=="删除"){
 					$.post("/brand/brandDelete",{"ids":$(this).val()},function(res){
@@ -183,6 +175,9 @@
 						}
 					})
 				}
+				$("#zyx-form input").val("");
+				$("#zyx-submit").prop("style","display:inline;");
+				lookForm("zyx-form");
 			}else{//这一部分☞弹出窗里的按钮修改
 				if($(this).html()=="新增"){
 					$.post("/brand/brandInsert",$("#zyx-form").serialize(),function(res){
@@ -205,6 +200,17 @@
 				}
 			}
 		})
+		
+		//隐藏部分标签，为了详情
+		function hiddenForm(formName){
+			$("#"+formName +" input ").prop("style","display:none;")
+			$("#"+ formName+" p ").prop("style","display:block;")
+		}
+		//重新显示标签
+		function lookForm(formName){
+			$("#"+ formName+" input ").prop("style","display:inline;")
+			$("#"+formName +" p ").prop("style","display:none;")
+		}
 	</script>
 </body>
 </html>
